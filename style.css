@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner&family=Gamja+Flower&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #00AAFF, #00FF6C)
+}
+
+html body {
+    font-family: 'Gamja Flower', cursive;
+}
+
+.container .calculator {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 80px);
+    min-height: 100vh;
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.calculator > button {
+    cursor: pointer;
+    font-size: 2rem;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, .75);
+}
+
+.calculator button:hover {
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.output {
+    /* giá trị 1 / -1 cơ bản là cột đầu và cột cuối cùng giá trị */
+    grid-column: 1 / -1; 
+    background-color: rgba(0, 0, 0, .75);
+    /* keep word in output */
+    word-wrap: break-word;
+    word-break: break-all;
+    /* flex output */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: space-around;
+    flex-direction: column;   
+}
+
+.output .previous-operand {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, .75);
+}
+
+.output .current-operand {
+    font-size: 2.5rem;
+    color: white;
+}
