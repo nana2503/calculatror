@@ -24,7 +24,8 @@ class Calculator {
 
     //show on reult screen 
     showOnResult(number) {
-        this.currentOperand = number
+        if(number === '.' &&  this.currentOperand.includes('.')) return
+        this.currentOperand =this.currentOperand + ' ' + number.toString();
     }
 
     //operation option pick + - * / = 
@@ -54,7 +55,7 @@ const calculator = new Calculator(previousOperandText, currentOperandText)
 
 numberButton.forEach(button  => {
     button.addEventListener('click', () => {
-        Calculator.showOnResult(button.innerText)
-        Calculator.updateResult()
+        calculator.showOnResult(button.innerText)
+        calculator.updateResult()
     })
 })
