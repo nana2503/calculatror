@@ -20,7 +20,7 @@ class Calculator {
     
     // delete all result
     delete() {
-
+        this.currentOperand = this.currentOperand.toString().slice(0, -1);
     }
 
     //show on reult screen 
@@ -33,7 +33,7 @@ class Calculator {
     chooseOperation(operation) {
         if (this.currentOperand === '') return //always show the value on previousOperand
         if (this.previousOperand !== '') {
-            this.conpute()
+            this.compute()
         }
         this.operation = operation;
         this.previousOperand = this.currentOperand;
@@ -41,7 +41,7 @@ class Calculator {
     }
 
     //calculating inside 
-    conpute() {
+    compute() {
         let computation;
         const prev = parseFloat(this.previousOperand);
         const curr = parseFloat(this.currentOperand);
@@ -67,16 +67,38 @@ class Calculator {
         this.previousOperand ='';
     }
 
+    getDisplayNumber(number) {
+        const stringNumber = number.toString()
+        const integerDigits = parseFloat(stringNumber.split('.')[0])
+        const decimalDigits = stringNumber.split('.')[1]
+        let integerDisplay
+        if (isNaN(integerDigits)) {
+          integerDisplay = ''
+        } else {
+          integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+        }
+        if (decimalDigits != null) {
+          return `${integerDisplay}.${decimalDigits}`
+        } else {
+          return integerDisplay
+        }
+      }
+
     //update after compute
     updateResult() {
-        this.currentOperandText.innerText = this.currentOperand; 
-        this.previousOperandText.innerText = this.previousOperand; 
+        this.currentOperandText.innerText = this.getDisplayNumber(this.currentOperand); 
+        if (this.operation != null) {
+        this.previousOperandText.innerText = 
+        `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`; 
+        } else {
+            this.previousOperandText.innerText = ''
+        }
     }   
 }
 const numberButton = document.querySelectorAll('[data-number]')
 const operationButton = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
-const deletesButton = document.querySelector('[data-delete]')
+const deleteButton = document.querySelector('[data-delete]')
 const allClearButton = document.querySelector('[data-all-clear]')
 const previousOperandText = document.querySelector('[data-previous-operand]')
 const currentOperandText = document.querySelector('[data-current-operand]')
@@ -97,7 +119,17 @@ operationButton.forEach(button  => {
     })
 })
 
-equalsButton.addEventListener('click', () => {
+equalsButton.addEventListener('click', button => {
     calculator.compute();
+    calculator.updateResult();
+})
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear();
+    calculator.updateResult();
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete();
     calculator.updateResult();
 })
