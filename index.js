@@ -129,18 +129,29 @@
 // })
 
 const btn = document.querySelectorAll('.number');
-const result =document.querySelector('.output'); 
+const previousOperand = document.querySelector('.previous-operand')
+const currentOperand = document.querySelector('.current-operand')
+const result = document.querySelector('.output')
 const operation = document.querySelectorAll('[data-operation]')
 const allClear = document.querySelector('[data-all-clear]')
 const deleteBtn = document.querySelector('[data-delete]')
+const equalsBtn =document.querySelector('[data-equals]')
+
+
 btn.forEach(button => {
-    button.addEventListener('click', () => {
-        btn.innerHTML = result.innerHTML
+    button.addEventListener('click', function() {
+        currentOperand.innerHTML += button.innerHTML;
+        result.innerHTML = currentOperand.innerHTML;
     })
 })
 
+operation.forEach(operating => {
+    operating.addEventListener('click', function() {
+    previousOperand.innerHTML=currentOperand.innerHTML;
+    console.log(previousOperand);
+    previousOperand.innerHTML="asdasd";
+     currentOperand.innerHTML = operating.innerText;
+     currentOperand.innerHTML = previousOperand.innerHTML;
 
-
-// document.addEventListener('click', () => {
-//     result.innerHTML = btn.innerHTML
-// })
+    })  
+})
