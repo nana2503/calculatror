@@ -131,27 +131,62 @@
 const btn = document.querySelectorAll('.number');
 const previousOperand = document.querySelector('.previous-operand')
 const currentOperand = document.querySelector('.current-operand')
-const result = document.querySelector('.output')
 const operation = document.querySelectorAll('[data-operation]')
 const allClear = document.querySelector('[data-all-clear]')
 const deleteBtn = document.querySelector('[data-delete]')
 const equalsBtn =document.querySelector('[data-equals]')
-
-
+let isCalculated=false;
+let isStandAlone = true;
 btn.forEach(button => {
     button.addEventListener('click', function() {
+        if (isStandAlone) {
+            equalsBtn.addEventListener('click', () => {
+                currentOperand.innerHTML = button.innerHTML;
+            })
+        }
+        if(isCalculated) {
+            currentOperand.innerHTML="";
+            isCalculated =false;
+            previousOperand.innerHTML = "";
+        }
         currentOperand.innerHTML += button.innerHTML;
-        result.innerHTML = currentOperand.innerHTML;
     })
 })
 
 operation.forEach(operating => {
     operating.addEventListener('click', function() {
     previousOperand.innerHTML=currentOperand.innerHTML;
-    console.log(previousOperand);
-    previousOperand.innerHTML="asdasd";
-     currentOperand.innerHTML = operating.innerText;
-     currentOperand.innerHTML = previousOperand.innerHTML;
-
+    currentOperand.innerHTML = "";
+    previousOperand.innerHTML += operating.innerHTML;
     })  
+    
+   
 })
+equalsBtn.addEventListener('click', () => {
+    let lastElement = previousOperand.innerHTML.slice(-1);
+    let numberString = previousOperand.innerHTML.slice(0,-1);
+    let curr = Number(currentOperand.innerHTML);
+    let prev = Number(numberString);
+    let result = 0;
+    if (lastElement === '+') {
+        result = prev + curr;
+        console.log(result);
+    } else if (lastElement === '-') {
+        result = prev - curr;
+    } else if (lastElement === '*') {
+        result = prev * curr;
+    } else {
+        result = prev / curr;
+    }
+    console.log(result);
+    currentOperand.innerHTML = result;
+    previousOperand.innerHTML = prev + " " + lastElement + " " + curr;
+    isCalculated=true;
+})
+
+allClear.addEventListener('click', () => {
+    currentOperand.innerHTML = "";
+    previousOperand.innerHTML = "";
+})
+
+console.log(allClear);
