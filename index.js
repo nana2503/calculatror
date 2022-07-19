@@ -139,11 +139,6 @@ let isCalculated=false;
 let isStandAlone = true;
 btn.forEach(button => {
     button.addEventListener('click', function() {
-        if (isStandAlone) {
-            equalsBtn.addEventListener('click', () => {
-                currentOperand.innerHTML = button.innerHTML;
-            })
-        }
         if(isCalculated) {
             currentOperand.innerHTML="";
             isCalculated =false;
@@ -158,19 +153,20 @@ operation.forEach(operating => {
     previousOperand.innerHTML=currentOperand.innerHTML;
     currentOperand.innerHTML = "";
     previousOperand.innerHTML += operating.innerHTML;
+
     })  
-    
-   
 })
 equalsBtn.addEventListener('click', () => {
     let lastElement = previousOperand.innerHTML.slice(-1);
     let numberString = previousOperand.innerHTML.slice(0,-1);
     let curr = Number(currentOperand.innerHTML);
     let prev = Number(numberString);
-    let result = 0;
-    if (lastElement === '+') {
+    let result
+    if (lastElement === '') {
+        prev = 0;
         result = prev + curr;
-        console.log(result);
+    } else if (lastElement === '+') {
+        result = prev + curr;
     } else if (lastElement === '-') {
         result = prev - curr;
     } else if (lastElement === '*') {
@@ -178,15 +174,37 @@ equalsBtn.addEventListener('click', () => {
     } else {
         result = prev / curr;
     }
-    console.log(result);
     currentOperand.innerHTML = result;
-    previousOperand.innerHTML = prev + " " + lastElement + " " + curr;
+    if(lastElement === '') {
+        previousOperand.innerHTML = curr + ' ' + equalsBtn.innerHTML;
+    } else if (lastElement !==  equalsBtn.innerHTML) {
+        previousOperand.innerHTML = prev + ' ' + lastElement + ' ' + curr + ' ' + equalsBtn.innerHTML;
+    } else if (lastElement === equalsBtn.innerHTML){
+        previousOperand.innerHTML = '';
+        currentOperand.innerHTML =  'xin hãy nhập phép tính mới';
+        currentOperand.style.fontSize = 'x-large';
+        currentOperand.style.fontFamily = "san-serif";
+    } else if (previousOperand.innerHTML === '' && currentOperand.innerHTML === 'xin hãy nhập phép tính mới') {
+        console.log(previousOperand.innerHTML);
+        console.log(currentOperand.innerHTML);
+    }
+    console.log(previousOperand.innerHTML);
+    console.log(currentOperand.innerHTML);
+    console.log(previousOperand.innerHTML === '' && currentOperand.innerHTML === 'xin hãy nhập phép tính mới');
     isCalculated=true;
 })
+
 
 allClear.addEventListener('click', () => {
     currentOperand.innerHTML = "";
     previousOperand.innerHTML = "";
 })
 
-console.log(allClear);
+
+deleteBtn.addEventListener('click', () => {
+    currentOperand.innerHTML = currentOperand.innerHTML.slice(0,-1)
+    if (isCalculated) {
+        previousOperand.innerHTML = "";
+        isCalculated = false;
+    }
+})
