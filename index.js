@@ -149,14 +149,23 @@ btn.forEach(button => {
 })
 
 operation.forEach(operating => {
+    let flag = false;
     operating.addEventListener('click', function() {
     previousOperand.innerHTML=currentOperand.innerHTML;
     currentOperand.innerHTML = "";
     previousOperand.innerHTML += operating.innerHTML;
-
+    if (operating.innerHTML = '.') {
+        flag;
+    }
     })  
 })
 equalsBtn.addEventListener('click', () => {
+    if (currentOperand.innerHTML === 'xin hãy nhập phép tính mới') {
+        clearScreen();
+        currentOperand.style.fontFamily = "'Gamja-Flower', cursive"
+        currentOperand.style.fontSize = "2.5rem"
+        return;
+    }
     let lastElement = previousOperand.innerHTML.slice(-1);
     let numberString = previousOperand.innerHTML.slice(0,-1);
     let curr = Number(currentOperand.innerHTML);
@@ -182,22 +191,18 @@ equalsBtn.addEventListener('click', () => {
     } else if (lastElement === equalsBtn.innerHTML){
         previousOperand.innerHTML = '';
         currentOperand.innerHTML =  'xin hãy nhập phép tính mới';
-        currentOperand.style.fontSize = 'x-large';
-        currentOperand.style.fontFamily = "san-serif";
-    } else if (previousOperand.innerHTML === '' && currentOperand.innerHTML === 'xin hãy nhập phép tính mới') {
-        console.log(previousOperand.innerHTML);
-        console.log(currentOperand.innerHTML);
+        currentOperand.style.fontSize = '2rem'
     }
-    console.log(previousOperand.innerHTML);
-    console.log(currentOperand.innerHTML);
-    console.log(previousOperand.innerHTML === '' && currentOperand.innerHTML === 'xin hãy nhập phép tính mới');
     isCalculated=true;
 })
 
-
-allClear.addEventListener('click', () => {
+function clearScreen () {
     currentOperand.innerHTML = "";
     previousOperand.innerHTML = "";
+}
+
+allClear.addEventListener('click', () => {
+    clearScreen();
 })
 
 
