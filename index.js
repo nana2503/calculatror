@@ -150,9 +150,13 @@ btn.forEach(button => {
 
 operation.forEach(operating => {
     operating.addEventListener('click', function() {
-    previousOperand.innerHTML += currentOperand.innerHTML;
-    currentOperand.innerHTML = "";
-    previousOperand.innerHTML += operating.innerHTML;
+        if (previousOperand.innerHTML === '') {
+            previousOperand.innerHTML = currentOperand.innerHTML;
+            currentOperand.innerHTML = "";
+            previousOperand.innerHTML += operating.innerHTML;
+        } else {
+            return null;
+        }
     })  
 })
 equalsBtn.addEventListener('click', () => {
@@ -178,6 +182,7 @@ equalsBtn.addEventListener('click', () => {
         result = prev * curr;
     } else if (lastElement === '/') {
         result = prev / curr;
+    } else {
     }
     currentOperand.innerHTML = result;
     if(lastElement === '') {
@@ -188,8 +193,6 @@ equalsBtn.addEventListener('click', () => {
         previousOperand.innerHTML = '';
         currentOperand.innerHTML =  'xin hãy nhập phép tính mới';
         currentOperand.style.fontSize = '2rem'
-    } else if (numberString > 2) {
-        currentOperand.innerHTML = result + result;
     }
     isCalculated=true;
 })
