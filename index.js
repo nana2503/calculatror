@@ -149,14 +149,10 @@ btn.forEach(button => {
 })
 
 operation.forEach(operating => {
-    let flag = false;
     operating.addEventListener('click', function() {
-    previousOperand.innerHTML=currentOperand.innerHTML;
+    previousOperand.innerHTML += currentOperand.innerHTML;
     currentOperand.innerHTML = "";
     previousOperand.innerHTML += operating.innerHTML;
-    if (operating.innerHTML = '.') {
-        flag;
-    }
     })  
 })
 equalsBtn.addEventListener('click', () => {
@@ -172,15 +168,15 @@ equalsBtn.addEventListener('click', () => {
     let prev = Number(numberString);
     let result
     if (lastElement === '') {
-        prev = 0;
-        result = prev + curr;
+        previousOperand.innerHTML = ""
+        result = "nhập lại đê";
     } else if (lastElement === '+') {
         result = prev + curr;
     } else if (lastElement === '-') {
         result = prev - curr;
     } else if (lastElement === '*') {
         result = prev * curr;
-    } else {
+    } else if (lastElement === '/') {
         result = prev / curr;
     }
     currentOperand.innerHTML = result;
@@ -192,6 +188,8 @@ equalsBtn.addEventListener('click', () => {
         previousOperand.innerHTML = '';
         currentOperand.innerHTML =  'xin hãy nhập phép tính mới';
         currentOperand.style.fontSize = '2rem'
+    } else if (numberString > 2) {
+        currentOperand.innerHTML = result + result;
     }
     isCalculated=true;
 })
